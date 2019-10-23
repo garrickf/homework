@@ -50,17 +50,9 @@ def tokenize(s):
 	Example output: ["the", "quick", "brown", "fox", "jumped", "over", "lazy", "dog"]
 	* order does not matter!
 	"""
-	"""
-	Begin your code
-	"""
-	
-	pattern = ''
-	sanitized = s
-	return sanitized
-	
-	"""
-	End your code
-	"""
+	pattern = '[\.!?]'
+	sanitized = re.sub(pattern, '', s.lower())
+	return list(set(sanitized.split()))
 
 
 def train():
@@ -71,17 +63,9 @@ def train():
 	"""
 	train_data = load_data(train_dir)
 
-	"""
-	Begin your code
-	"""
-
 	for example, label in train_data:
-		# TODO: use the example to update the Naive Bayes model
-		raise Exception('unimplemented!')
-
-	"""
-	End your code
-	"""
+		tokens = tokenize(example)
+		nb.update(tokens, label)
 
 	nb.compute_probabilities()
 
@@ -94,19 +78,15 @@ def test():
 	and accumulate a correct counter.
 	"""
 	test_data = load_data(test_dir)
+	
 	correct, total = 0, 0
-
-	"""
-	Begin your code
-	"""
-
 	for example, label in test_data:
-		# TODO: use the example to make a prediction, and record how many are correct
-		raise Exception('unimplemented!')
-
-	"""
-	End your code
-	"""
+		tokens = tokenize(example)
+		predicted, score = nb.predict(tokens)
+		# print(predicted, score, example)
+		if predicted == label:
+			correct += 1
+		total += 1
 	
 	print('Accuracy:', correct / total)
 

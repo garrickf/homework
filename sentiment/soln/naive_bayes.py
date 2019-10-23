@@ -35,18 +35,15 @@ class NaiveBayesModel():
 
 		In this step, simply accumulate the counts of the information you need. 
 		Calculating the log probabilities happens in compute_probabilities.
-		Think about adding Laplace smoothing here.
 		"""
-		"""
-		Begin your code
-		"""
-		
-		# TODO: accumulate counts
+		self.documents[label] += 1
+		self.total_documents += 1
 
-		"""
-		End your code
-		"""
-
+		for token in tokens:
+			self.counts[label][token] += 1
+			if token not in self.counts[1 - label]: 
+				self.counts[1 - label][token] = 1 # Laplace smoothing
+			self.total_counts[label] += 1
 
 
 	def compute_probabilities(self):
@@ -54,12 +51,9 @@ class NaiveBayesModel():
 		Assuming counts are updated, compute the log probabilities and cache them
 		for future predictions.
 		"""
-		# TODO: update the log_prior given label and counts. HINT: np.log can
-		# compute the element-wise log for an array. Change the line below.
-		self.log_prior = np.array([0, 0])
+		self.log_prior = np.log(self.documents / self.total_documents)
 		for label, counts in enumerate(self.counts):
-			# TODO: update the log_likelihood given label and counts. Change the line below.
-			self.log_likelihood[label] = collections.defaultdict(int)
+			self.log_likelihood[label] = {k: np.log(v / self.total_counts[label]) for k, v in self.counts[label].items()}
 
 
 	def predict(self, tokens):
@@ -69,15 +63,11 @@ class NaiveBayesModel():
 		"""
 		log_prob = [0, 0]
 		for label in range(len(log_prob)):
-			"""
-			Begin your code
-			"""
-
-			# TODO: accumulate the score log_prob[label] (prior plus all liklihoods)
-			
-			"""
-			End your code
-			"""
+			log_prob[label] += self.log_prior[label]
+			for token in tokens:
+				if token not in self.log_likelihood[label]: continue
+				log_prob[label] += self.log_likelihood[label][token]
+		
 		return max(zip(range(len(log_prob)), log_prob), key=lambda t: t[1])
 
 
