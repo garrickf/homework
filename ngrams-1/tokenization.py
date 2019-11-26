@@ -16,9 +16,9 @@ def preprocess(tokens, ngrams=1):
     tokens. This is optional, but desired: it lets you start from the very beginning
     of the sentence.
     """
-    start = ['<s>'] * (ngrams)
-    end = ['</s>'] * (ngrams)
-    tokens = start + tokens + end
+    # CODE START
+    tokens = []
+    # CODE END
 
     return tokens
 
@@ -38,11 +38,9 @@ def process_tokens(tokens, ngrams=1):
     
     window = []
     for token in tokens:
-        if len(window) == ngrams:
-            token_map[tuple(window)][token] += 1
-            window.pop(0)
-
-        window.append(token)
+        # CODE START
+        pass
+        # CODE END
     return token_map
 
 
@@ -52,20 +50,16 @@ def probability(token_map, vocab, word, history, ngrams=1):
     given the history. This amounts to counting the number of times the word occurs
     in the map.
 
-    Should never return 0 (use add-1 smoothing).
+    Should never return 0 (use add-1 smoothing). How could this be used for a 
+    feature like tab autocompletion?
     """
     assert(len(history) == ngrams)
     history = tuple(history)
     n = len(vocab)
 
     # BEGIN CODE
-    count = 0
-    total = 0
-    for c in token_map[history].values():
-        total += c
-
-    return (token_map[history][word] + 1) / (total + n)
-
+    return 0
+    # END CODE
 
 def perplexity(test, token_map, vocab, ngrams=1):
     """
@@ -81,18 +75,9 @@ def perplexity(test, token_map, vocab, ngrams=1):
     n = len(tokens)
     tokens = preprocess(tokens, ngrams=ngrams)
     
-    window = tokens[:ngrams]
-    p = 1
-    for i in range(ngrams, len(tokens)):
-        next_token = tokens[i]
-
-        p *= 1 / probability(token_map, vocab, next_token, window, ngrams=ngrams)
-
-        window.append(next_token)
-        window.pop(0)
-
-    PP = p ** (1 / n)
-    return PP
+    # CODE START
+    return 0
+    # CODE END
 
 
 SENTENCE = 'the quick brown fox jumped over the lazy dog.'

@@ -21,13 +21,9 @@ def process_tokens(filestream, map):
 	Note that this techniques eschews the use of the beginning and end sentence
 	tokens (what are the disadvantages of this approach?).
 	"""
-	window = []
-	for token in filestream:
-		if len(window) == 2:
-			map[tuple(window)].append(token)
-			window.pop(0)
-
-		window.append(token)
+	# CODE START
+	pass
+	# CODE END
 
 
 def generate_text(map, n_words=20):
@@ -41,12 +37,11 @@ def generate_text(map, n_words=20):
 	"""
 	window = list(random.choice(list(map.keys())))
 	processed = ' '.join(window)
-	for i in range(n_words):
-		to_choose = map[tuple(window)]
-		next_word = random.choice(to_choose)
-		processed += ' {}'.format(next_word)
-		window.append(next_word)
-		window.pop(0)
+	
+	# CODE START
+	pass
+	# CODE END
+
 	print('...{}...'.format(processed))
 
 
