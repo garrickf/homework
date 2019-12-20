@@ -21,26 +21,12 @@ def get_model():
     input_length = 500
     rnn_activations = 128
 
-    """
-    Your code here: create an input layer with shape (input_length,)
-    """
-    X = None
+    X = K.layers.Input(shape=(input_length,))
 
-    """
-    Your code here: Pass the sequence through an embedding layer mapping from 
-    vocabulary_size to embedding_size.
-    """
-    Embedded = None
+    Embedded = K.layers.Embedding(vocabulary_size, embedding_size)(X)
 
-    """
-    Your code here: Pass the embedding layer to an LSTM with 128 cells.
-    """
-    LSTM = None
+    LSTM = K.layers.LSTM(rnn_activations)(Embedded)
 
-    """
-    Provided: the LSTM gets fed through a 1 neuron dense layer with sigmoid 
-    activation to get the output.
-    """
     Y = K.layers.Dense(1, activation='sigmoid')(LSTM)
 
     model = K.models.Model(inputs=X, outputs=Y)
@@ -65,23 +51,11 @@ def train(model, x_train, y_train):
     batch_size = 64
     num_epochs = 3
 
-    """
-    Your code here: train the model.
-    """
-
-    """
-    End code
-    """
+    model.fit(x_train, y_train, batch_size=batch_size, epochs=num_epochs)
 
 
 def test(model, x_test, y_test):
-    """
-    Your code here: evaluate the model.
-    """
-
-    """
-    End code
-    """
+    model.evaluate(x_test, y_test)
 
 
 def main(): 
