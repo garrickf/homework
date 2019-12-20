@@ -41,4 +41,4 @@ Here are the tasks:
 1. Read [this guide](https://www.tensorflow.org/guide/keras/rnn) and [this guide](https://towardsdatascience.com/a-beginners-guide-on-sentiment-analysis-with-rnn-9e100627c02e) to making RNN's in Keras.
 2. Build out the `get_model` function according to specification.
 3. Add the required lines for training and testing the model.
-4. Experiment with different numbers of units and see how it affects the accuracy.
+4. Experiment with different numbers of units and see how it affects the accuracy. Right now, we can get 86.75% accuracy with the current settings; what helps increase accuracy without making training intractable?
